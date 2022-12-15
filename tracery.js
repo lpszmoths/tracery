@@ -744,6 +744,37 @@ var tracery = function() {
 
     var baseEngModifiers = {
 
+        // Goblinmode posessive modifiers
+        // https://github.com/galaxykate/tracery/compare/master...goblinzone:tracery:master?diff=unified
+        possessive : function(s){
+            var s = s;
+            switch(s) {
+                case "he":
+                    return "his";
+                    break;
+                case "she":
+                    return "her";
+                    break;
+                case "it":
+                    return "its";
+                    break;
+                case "us":
+                    return "our";
+                    break;
+                case "them":
+                    return "their";
+                    break;
+                case "who":
+                    return "whose";
+                    break;
+                default:
+                    var last = s.charAt(s.length - 1);
+                    if (last === "s")
+                        return s + "'";
+                    else
+                        return s + "'s";
+            };
+
         replace : function(s, params) {
             //http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
             return s.replace(new RegExp(escapeRegExp(params[0]), 'g'), params[1]);
@@ -848,7 +879,7 @@ var tracery = function() {
         }
     };
 
-    tracery.baseEngModifiers = baseEngModifiers; 
+    tracery.baseEngModifiers = baseEngModifiers;
     // Externalize
     tracery.TraceryNode = TraceryNode;
 
@@ -858,4 +889,4 @@ var tracery = function() {
     return tracery;
 }();
 
-module.exports = tracery; 
+module.exports = tracery;
