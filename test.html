@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+
+<script src="./tracery.js"></script>
+
+<script style="display:block; border:1px solid black; min-height: 10em; min-width:100%;">
+  window.addEventListener('load', function(e){
+var grammar = tracery.createGrammar({
+  'animal': ['panda!','fox!','capybara!','iguana!'],
+  'emotion': ['sad','happy','angry','jealous'],
+  'origin':['I am #emotion.a# #animal.replace(!,)#. #.rand(5)# #.randRange(15,20)#'],
+});
+
+grammar.addModifiers(tracery.baseEngModifiers);
+
+console.log(grammar.flatten('#origin#'));
+});
+</script>
+
+<div class="output"></div>
+
+<script>
+
+</script>
+
+</body>
+</html>
+

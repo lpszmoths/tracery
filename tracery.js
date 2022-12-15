@@ -154,15 +154,19 @@ var tracery = function() {
 
                         // Todo: ignore any escaped commas.  For now, commas always split
                         var results = regExp.exec(this.modifiers[i]);
+                        console.log("function(s)?", regExp, results);
                         if (!results || results.length < 2) {
                         } else {
                             var modParams = results[1].split(",");
                             modName = this.modifiers[i].substring(0, modName.indexOf("("));
+                            console.log("function name/params?", modName, modParams);
                         }
 
                     }
 
                     var mod = this.grammar.modifiers[modName];
+
+                    console.log('mod', mod);
 
                     // Missing modifier?
                     if (!mod) {
@@ -170,6 +174,8 @@ var tracery = function() {
                         this.finishedText += "((." + modName + "))";
                     } else {
                         this.finishedText = mod(this.finishedText, modParams);
+
+                        console.log("modded text:", this.finishedText);
 
                     }
 
@@ -665,6 +671,8 @@ var tracery = function() {
 
                     switch(c) {
 
+                    // does the function parens parser need to go here?
+
                     // Enter a deeper bracketed section
                     case '[':
                         if (depth === 0 && !inTag) {
@@ -780,11 +788,20 @@ var tracery = function() {
                         return s + "'";
                     else
                         return s + "'s";
-            };
+            }},
 
         replace : function(s, params) {
             //http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
+            console.log("replace!", s, params, new RegExp(escapeRegExp(params[0]), 'g'), s.replace(new RegExp(escapeRegExp(params[0]), 'g'), params[1]));
             return s.replace(new RegExp(escapeRegExp(params[0]), 'g'), params[1]);
+        },
+
+        rand : function(s, params) {
+            return Math.round(Math.random() * parseInt(params[0], 10));
+        },
+
+        randRange : function(s, params) {
+            return Math.round(Math.random() * (parseInt(params[1], 10) - parseInt(params[0], 10)) + parseInt(params[0], 10));
         },
 
         capitalizeAll : function(s) {
@@ -883,6 +900,10 @@ var tracery = function() {
             default:
                 return s + "ed";
             }
+        },
+
+        urlencode : function(s) {
+            return encodeURIComponent(s);
         }
     };
 
